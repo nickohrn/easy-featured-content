@@ -1,19 +1,19 @@
-=== Featured Content ===
+=== Easy Featured Content ===
 Contributors: nickohrn
 Tags: featured-content, admin
 Requires at least: 3.5.1
-Tested up to: 3.5.1
-Stable tag: 1.0.0
+Tested up to: 3.9.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin allows you to mark content as featured and provides supporting functionality.
+This plugin allows you to mark content as featured and use the designation in your queries and via a template tag.
 
 == Description ==
 
-This plugin is very simple and grew out of a client project of mine. It allows you to mark any content that has an editing UI
-in the WordPress administrative section as featured. It also provides a template tag that you can use to display certain markup
-or styles for feature content and a query variable that allows you to query for featured content.
+Quickly and easily mark any content that has an editing UI in the WordPress administrative section as featured. This plugin
+also provides a template tag that you can use to display certain markup or styles for featured content and a query
+variable that allows you to query for featured (or non-featured) content.
 
 == Installation ==
 
@@ -24,13 +24,23 @@ or styles for feature content and a query variable that allows you to query for 
 
 == Frequently Asked Questions ==
 
+= How do I make a post type featurable? =
+
+By default, the plugin only allows posts and pages to be featured. However, if you have a custom post type, you can easily add featured content support by modifying the following snippet:
+
+`function register_featured_content_support() {
+	// Adds featured content support to the custom post type 'my-post-type-slug'
+	add_post_type_support('my-post-type-slug', 'featured-content');
+
+	// Removes featured content support from pages
+	remove_post_type_support('page', 'featured-content');
+}
+add_filter('after_setup_theme', 'register_featured_content_support');`
+
 = Why would I want to use this plugin? =
 
 If you have content on your site that you want to feature (maybe on the home page or in a sidebar) then you can use this plugin
-to enable marking that content as featured. It works for the built-in WordPress types (Page, Post) as well as any custom types
-that have an editing UI.
-
-Use this plugin so that you don't have to write the same thing yourself.
+to enable marking that content as featured. It works for any post type that provides an editing UI.
 
 = How do I use the query variable? =
 
@@ -49,10 +59,19 @@ If you need to get only non featured content, you would do something like the fo
 
 == Changelog ==
 
-= 1.0 =
+= 1.1.0 =
+* Better security
+* Code cleanup
+* Use `has_post_type_support` and `add_post_type_support`
+* Only posts and pages support featured content by default now
+
+= 1.0.0 =
 * Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.0 =
-This is the initial release version.
+= 1.1.0 =
+Only posts and pages can be featured by default now - if you wish to have other post types featurable, use `add_post_type_support` as detailed in the FAQ section
+
+= 1.0.0 =
+Initial release of plugin
